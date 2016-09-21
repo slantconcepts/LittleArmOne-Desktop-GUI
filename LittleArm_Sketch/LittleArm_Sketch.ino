@@ -22,6 +22,7 @@ int gripperPos;
 int desiredDelay;
 
 int servoSpeed = 15;
+int ready = 0;
 
 struct jointAngle desiredAngle; //desired angles of the servos
 
@@ -43,13 +44,14 @@ void setup()
   baseServo.write(90);        //intial positions of servos
   shoulderServo.write(150);
   elbowServo.write(110);
+  ready = 0;
 } 
 
 //primary arduino loop
 void loop() 
 { 
   if (Serial.available()){
-
+    ready = 1;
     desiredAngle.base = Serial.parseInt();
     desiredAngle.shoulder = Serial.parseInt();
     desiredAngle.elbow = Serial.parseInt();
@@ -70,7 +72,7 @@ void loop()
   int status4 = 0;
   int done = 0 ; 
   
-  while( done == 0){  
+  while(done == 0 && ready == 1){  
     //move the servo to the desired position
     status1 = servoParallelControl(desiredAngle.base, baseServo, desiredDelay);
     status2 = servoParallelControl(desiredAngle.shoulder,  shoulderServo, desiredDelay);
