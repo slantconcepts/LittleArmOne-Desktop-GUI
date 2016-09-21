@@ -28,6 +28,21 @@ while checker == 0:
 
 #++++++++++++++++Functions+++++++++++++++++++++++
 
+colors = {
+    "spacer": "SystemBackground",
+    "background": "black",
+    "frame": "black",
+    "label": "gray",
+    "speed": "blue",
+    "arm": "green",
+    "gripper": "red"
+}
+
+if sys.platform != "windows": 
+    colors["spacer"] = "SystemWindowBody"
+    colors["background"] = "white"
+    colors["frame"] = "white"
+
 def move_it(aCommand):
     #this function sends the command of joint angles to the arduino to move the servos to the desired positions in real time with the GUI
     
@@ -108,7 +123,7 @@ def clearFile():
 #++++++++++++++++++++The GUI++++++++++++++++++++++
 root = Tk()
 root.wm_title("LittleArm Interface")
-root.configure(background = 'black')
+root.configure(background = colors["background"])
 
 #++++++++++++++++++++Drive Motors++++++++++++++++++
 
@@ -126,18 +141,18 @@ speedControl.pack()
 
 #+++++++++++++++++ARM+++++++++++++++++++++++++
 # The scroll bars
-armControl = Frame(root, background = 'black')
+armControl = Frame(root, background = colors["frame"])
 armControl.pack( )
 
 armLabel = Label(armControl, text = "Arm Components", font = ("ARIAL", 24),relief = GROOVE, padx = 100)
 armLabel.pack()
 
-spacerLabel = Label(armControl,  bg = 'SystemBackground', padx = 100)
+spacerLabel = Label(armControl,  bg = colors["spacer"], padx = 100)
 spacerLabel.pack()
 
 #++++++++++++++++++++++++BASE+++++++++++++++++++++++++++
 
-baseLabel = Label(armControl, text = "Base", font = ("ARIAL", 16), relief = GROOVE, padx = 100, width = 9, bg = 'green')
+baseLabel = Label(armControl, text = "Base", font = ("ARIAL", 16), relief = GROOVE, padx = 100, width = 9, bg = colors["arm"])
 baseLabel.pack()
 
 base = Scale(armControl, from_= 5, to = 175, length = 306, orient = HORIZONTAL, troughcolor = 'green', showvalue = 0, highlightbackground = 'black', command = move_it)
@@ -146,7 +161,7 @@ base.pack()
 
 #++++++++++++++++++++++++Shoulder+++++++++++++++++++++++++
 
-shoulderLabel = Label(armControl, text = "Shoulder", font = ("ARIAL", 16),relief = GROOVE, padx = 100, width = 9, bg = 'green')
+shoulderLabel = Label(armControl, text = "Shoulder", font = ("ARIAL", 16),relief = GROOVE, padx = 100, width = 9, bg = colors["arm"])
 shoulderLabel.pack()
 
 shoulder = Scale(armControl, from_= 5, to = 175, length = 306, orient = HORIZONTAL, troughcolor = 'green', showvalue = 0,command = move_it)
@@ -155,7 +170,7 @@ shoulder.pack()
 
 #++++++++++++++++++++++ELBOW++++++++++++++++++++++++++++
 
-elbowLabel = Label(armControl, text = "Elbow",font = ("ARIAL", 16), relief = GROOVE, padx = 100, width = 9, bg = 'green')
+elbowLabel = Label(armControl, text = "Elbow",font = ("ARIAL", 16), relief = GROOVE, padx = 100, width = 9, bg = colors["arm"])
 elbowLabel.pack()
 
 elbow = Scale(armControl, from_= 5, to = 175, length = 306, orient = HORIZONTAL,troughcolor = 'green', showvalue = 0, command = move_it)
@@ -164,7 +179,7 @@ elbow.pack()
 
 #++++++++++++++++++++++++++++Gripper+++++++++++++++++++
 
-gripperLabel = Label(armControl, text = "Gripper",font = ("ARIAL", 16), relief = GROOVE, padx = 100, width = 9, bg = 'red')
+gripperLabel = Label(armControl, text = "Gripper",font = ("ARIAL", 16), relief = GROOVE, padx = 100, width = 9, bg = colors["gripper"])
 gripperLabel.pack()
 
 gripper = Scale(armControl, from_= 5, to = 75, length = 306, orient = HORIZONTAL, troughcolor = 'red', showvalue = 0,  command = move_it)
@@ -172,20 +187,20 @@ gripper.pack()
 
 #++++++++++++++++++++++++++Speed++++++++++++++++++++++++
 
-spacerLabel2 = Label(armControl,  bg = 'SystemBackground', padx = 100)
+spacerLabel2 = Label(armControl,  bg = colors["spacer"], padx = 100)
 spacerLabel2.pack()
 
-speedLabel = Label(armControl, font = ("Arial", 16), text = "Speed", relief = GROOVE, padx = 100, width = 9)
+speedLabel = Label(armControl, bg = colors["speed"], font = ("Arial", 16), text = "Speed", relief = GROOVE, padx = 100, width = 9)
 speedLabel.pack()
 
-theSpeed = Scale(armControl, from_= 3, to = 20, length = 306, orient = HORIZONTAL, troughcolor = 'blue' ,command = move_it)
+theSpeed = Scale(armControl, from_= 3, to = 20, length = 306, orient = HORIZONTAL, troughcolor = colors["speed"] ,command = move_it)
 theSpeed.pack()
 
 #+++++++++++++++++++++++RECORD++++++++++++++++++++++++++++
-spacerLabel3 = Label(armControl,  bg = 'SystemBackground', padx = 100)
+spacerLabel3 = Label(armControl,  bg = colors["spacer"], padx = 100)
 spacerLabel3.pack()
 
-recordButtons = Frame(root, bg = 'black')
+recordButtons = Frame(root, bg = colors["frame"])
 recordButtons.pack( )
 
 pauseButton = Button(recordButtons,font = ("ARIAL", 16), text= "Pause for 1 Sec", width = 20, command = recordPause)
@@ -194,7 +209,7 @@ pauseButton.pack()
 homeButton = Button(recordButtons,font = ("ARIAL", 16), text= "Go Home", width = 20, command = goHome)
 homeButton.pack()
 
-spacerLabel4 = Label(recordButtons,  bg = 'SystemBackground', padx = 100)
+spacerLabel4 = Label(recordButtons,  bg = colors["spacer"], padx = 100)
 spacerLabel4.pack()
 
 recordButton = Button(recordButtons, font = ("ARIAL", 16),text = "Record Position", width = 20, command = recordArmPos)
@@ -206,7 +221,7 @@ playButton.pack()
 clearButton = Button(recordButtons, font = ("ARIAL", 16), text = "New Sequence", width = 20, command = clearFile)
 clearButton.pack()
 
-spacerLabel5 = Label(recordButtons,  bg = 'SystemBackground', padx = 100)
+spacerLabel5 = Label(recordButtons,  bg = colors["spacer"], padx = 100)
 spacerLabel5.pack()
 #+++++++++++++++++++++++++++Primaryu Loop+++++++++++++++++
 
