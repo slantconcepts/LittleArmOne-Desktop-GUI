@@ -38,7 +38,7 @@ colors = {
     "gripper": "red"
 }
 
-if sys.platform != "windows": 
+if sys.platform != "win32": 
     colors["spacer"] = "SystemWindowBody"
     colors["background"] = "white"
     colors["frame"] = "white"
